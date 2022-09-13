@@ -31,12 +31,12 @@ docdir=$(datarootdir)/doc/$(DEST)
 mandir=$(datarootdir)/man
 man1dir=$(mandir)/man1
 manext=.1
-LIBS=-Llib -lfusezip $(shell $(PKG_CONFIG) fuse --libs) $(shell $(PKG_CONFIG) libzip --libs)
+LIBS=-Llib -lfusezip -lfuse-t $(shell $(PKG_CONFIG) libzip --libs)
 LIB=lib/libfusezip.a
-CXXFLAGS=-g -O0 -Wall -Wextra -Wconversion -Wsign-conversion -Wlogical-op -Wshadow -pedantic -Werror -std=c++11
-RELEASE_CXXFLAGS=-O2 -Wall -Wextra -Wconversion -Wsign-conversion -Wlogical-op -Wshadow -pedantic -Werror -std=c++11
+CXXFLAGS=-I/usr/local/include/fuse -g -O0 -Wall -Wextra -Wconversion -Wsign-conversion -Wshadow -pedantic  -Wno-nullability-extension -std=c++11 
+RELEASE_CXXFLAGS=-O2 -Wall -Wextra -Wconversion -Wsign-conversion -Wshadow -pedantic -std=c++11
 PKG_CONFIG?=pkg-config
-FUSEFLAGS=$(shell $(PKG_CONFIG) fuse --cflags)
+FUSEFLAGS=-D_FILE_OFFSET_BITS=64
 ZIPFLAGS=$(shell $(PKG_CONFIG) libzip --cflags)
 SOURCES=main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
